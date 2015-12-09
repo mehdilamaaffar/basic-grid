@@ -1,0 +1,84 @@
+/*============================================ variables ================================*/
+$columns: 12!default
+$gutter: 15px!default
+
+$small: 768px!default
+$meduim: 992px!default
+$large: 1200px!default
+
+
+/*============================================ mixin ===================================*/
+@mixin responsive-coumns ($suffix)
+  .col#{$suffix}-center
+    float: none
+    margin: 0 auto
+  @for $i from 0 through $columns
+    @if $i != 0
+      .col#{$suffix}-#{$i}
+        width: $i / $columns * 100%
+    .col#{$suffix}-push-#{$i}
+      left: $i / $columns * 100%
+    .col#{$suffix}-pull-#{$i}
+      rigth: $i / $columns * 100%
+    .col#{$suffix}-offset-#{$i}
+      margin-left: $i / $columns * 100%
+
+
+/*============================================ extends ===================================*/
+%col
+  position: relative
+  float: left
+  min-height: 1px
+  padding: 0 $gutter
+
+%clearfix
+  &:before,
+  &:after
+    content: ""
+    display: table
+  &:after
+    clear: both
+
+
+/*============================================ class ===================================*/
+.container
+  width: 80%
+  margin: 0px auto
+
+.container-fluid
+  width: 100%
+  margin: 0px auto
+
+.row
+  padding: 0 -$gutter
+  @extend %clearfix
+
+
+/*============================================ grid ===================================*/
+@for $i from 1 through $columns
+  .col-xs-#{$i}, .col-sm-#{$i}, .col-md-#{$i}, .col-lg-#{$i}
+    @extend %col
+
+@include responsive-coumns('-xs')
+
+@media only screen and (min-width: $small)
+  @include responsive-coumns('-sm')
+
+@media only screen and (min-width: $meduim)
+  @include responsive-coumns('-md')
+
+@media only screen and (min-width: $large)
+  @include responsive-coumns('-lg')
+
+/*============================================ Helper ===================================*/
+/* Center text*/
+.text-align
+  margin-right: auto
+  margin-left: auto
+  text-align: center
+
+/* Center block */
+.center-block
+  display: block
+  margin-right: auto
+  margin-left: auto
